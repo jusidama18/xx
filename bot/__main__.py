@@ -103,7 +103,6 @@ def bot_help(update, context):
 
 /{BotCommands.CloneCommand} : Clone link Google Drive
 
-
 /{BotCommands.UsageCommand}: ngeliat sisa penggunaan bulan ini
 
 /tolongturrent: buat nyari link torrent
