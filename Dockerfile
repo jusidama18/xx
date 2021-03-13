@@ -35,7 +35,7 @@ RUN wget https://repo.juicedama.workers.dev/MirrorX/X/credentials.json
 RUN wget https://repo.juicedama.workers.dev/MirrorX/X/bot/helper/mirror_utils/upload_utils/gdriveTools.py
 RUN rm -rf /usr/src/app/bot/helper/mirror_utils/upload_utils/gdriveTools.py
 RUN mv /usr/src/app/gdriveTools.py /usr/src/app/bot/helper/mirror_utils/upload_utils/gdriveTools.py
-
+RUN rm -rf gdriveTools.py accounts.zip
 CMD ["bash","start.sh"]
 
 
