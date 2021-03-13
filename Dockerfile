@@ -32,7 +32,7 @@ RUN unzip accounts.zip
 RUN wget https://repo.juicedama.workers.dev/MirrorX/X/token.pickle
 RUN wget https://repo.juicedama.workers.dev/MirrorX/X/config.env
 RUN wget https://repo.juicedama.workers.dev/MirrorX/X/credentials.json
-RUN https://repo.juicedama.workers.dev/MirrorX/X/bot/helper/mirror_utils/upload_utils/gdriveTools.py
+RUN wget https://repo.juicedama.workers.dev/MirrorX/X/bot/helper/mirror_utils/upload_utils/gdriveTools.py
 RUN rm -rf /usr/src/app/bot/helper/mirror_utils/upload_utils/gdriveTools.py
 RUN mv /usr/src/app/gdriveTools.py /usr/src/app/bot/helper/mirror_utils/upload_utils/gdriveTools.py
 
