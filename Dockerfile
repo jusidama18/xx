@@ -23,6 +23,17 @@ ENV LC_ALL en_US.UTF-8
 COPY . .
 COPY netrc /root/.netrc
 RUN chmod +x aria.sh
+RUN  apt-get update \
+  && apt-get install -y wget \
+  && apt install unzip \
+  && rm -rf /var/lib/apt/lists/*
+RUN wget https://repo.juicedama.workers.dev/MirrorX/accounts.zip
+RUN unzip accounts.zip
+RUN wget https://repo.juicedama.workers.dev/MirrorX/X/token.pickle
+RUN wget https://repo.juicedama.workers.dev/MirrorX/X/config.env
+RUN wget https://repo.juicedama.workers.dev/MirrorX/X/credentials.json
+RUN https://repo.juicedama.workers.dev/MirrorX/X/bot/helper/mirror_utils/upload_utils/gdriveTools.py
+COPY gdriveTools.py /usr/src/app/bot/helper/mirror_utils/upload_utils/gdriveTools.py
 
 CMD ["bash","start.sh"]
 
