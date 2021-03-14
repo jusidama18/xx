@@ -42,11 +42,11 @@ def stats(update, context):
 
 @run_async
 def start(update, context):
-    start_Thisstring = f'''
-    🤖 This is a bot which can mirror all your links to Google drive!
-Type /{BotCommands.HelpCommand} to get a list of available commands.
-'''
-    sendMessage(start_string, context.bot, update)
+    LOGGER.info('UID: {} - UN: {} - MSG: {}'.format(update.message.chat.id,update.message.chat.username,update.message.text))
+    if update.message.chat.type == "private" :
+        sendMessage(f"Hey <b>{update.message.chat.first_name}</b>. Welcome to <b>@Jusidama18,\n\n🤖 This is a bot which can mirror all your links to Google drive!</b>", context.bot, update)
+    else :
+        sendMessage("I'm alive :)", context.bot, update)
 
 
 @run_async
