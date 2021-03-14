@@ -10,7 +10,7 @@ import telegram.ext as tg
 from dotenv import load_dotenv
 from pyrogram import Client
 from telegraph import Telegraph
-from bot.gd.config import BOT_TOKEN
+from bot.config import BOT_TOKEN
 
 import socket
 import faulthandler
