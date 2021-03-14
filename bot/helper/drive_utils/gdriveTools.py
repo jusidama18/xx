@@ -11,7 +11,7 @@ from googleapiclient.errors import HttpError
 
 from telegram import InlineKeyboardMarkup
 from bot.helper.telegram_helper import button_build
-from bot import DRIVE_NAME, DRIVE_ID, INDEX_URL, telegra_ph
+from bot import DRIVE_NAME, DRIVE_ID, INDEX_URL, telegraph
 
 LOGGER = logging.getLogger(__name__)
 logging.getLogger('googleapiclient.discovery').setLevel(logging.ERROR)
