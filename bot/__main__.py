@@ -125,14 +125,7 @@ def bot_help(update, context):
 
 @run_async
 def helper(update, context):
-    sendMessage('''Here are the available commands of the bot\n\n*Usage:* `/clonebot1 <link> [DESTINATION_ID]`
-            \n*Example:* \n1. `/clonebot1 https://drive.google.com/drive/u/1/folders/0AO-ISIXXXXXXXXXXXX`\n2. `/clonebot1 0AO-ISIXXXXXXXXXXXX`"
-            \n*DESTIONATION_ID* is optional. It can be either link or ID to where you wish to store a particular clone.1 \
-            \n\nYou can also *ignore folders* from clone process by doing the following:\n \
-                `/clonebot1 <FOLDER_ID> [DESTINATION] [id1,id2,id3]`\n 
-                In this example: id1, id2 and id3 would get ignored from cloning\nDo not use <> or [] in actual message. \
-                    *Make sure to not put any space between commas (,).*\n" \
-                        f"Any Problem? Just ask at our [Channel]({REPO_LINK})", context.bot, update, "Markdown" ''')
+    sendMessage('''Here are the available commands of the bot\n\n*Usage:* `/clonebot1 <link> [DESTINATION_ID]`\n*Example:* \n1. `/clonebot1 https://drive.google.com/drive/u/1/folders/0AO-ISIXXXXXXXXXXXX`\n2. `/clonebot1 0AO-ISIXXXXXXXXXXXX`"\n*DESTIONATION_ID* is optional. It can be either link or ID to where you wish to store a particular clone.1 \\n\nYou can also *ignore folders* from clone process by doing the following:\n \`/clonebot1 <FOLDER_ID> [DESTINATION] [id1,id2,id3]`\n In this example: id1, id2 and id3 would get ignored from cloning\nDo not use <> or [] in actual message. \*Make sure to not put any space between commas (,).*\n" \f"Any Problem? Just ask at our [Channel]({REPO_LINK})", context.bot, update, "Markdown" ''')
 
 # TODO Cancel Clones with /cancel command.
 @run_async
