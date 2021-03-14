@@ -14,6 +14,7 @@ RUN apt-get -qq update && \
 COPY requirements.txt .
 COPY extract /usr/local/bin
 COPY pextract /usr/local/bin
+RUN apt-get clean && apt-get update && apt-get install -y locales
 RUN chmod +x /usr/local/bin/extract && chmod +x /usr/local/bin/pextract
 RUN pip3 install --no-cache-dir -r requirements.txt
 RUN locale-gen en_US.UTF-8
