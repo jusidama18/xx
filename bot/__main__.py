@@ -28,12 +28,12 @@ def stats(update, context):
     cpuUsage = psutil.cpu_percent(interval=0.5)
     memory = psutil.virtual_memory().percent
     disk = psutil.disk_usage('/').percent
-    stats = f'<b>Bot Menyala Sejak ⌚:</b> {currentTime}\n' \
-            f'<b>Sisa Penyimpanan🗄️:</b> {total}\n' \
-            f'<b>Memory bot terpakai 🗃️:</b> {used}  ' \
-            f'<b>Ruang Kosong Bot 🗃️:</b> {free}\n\n' \
-            f'📇Pengunaan data bot📇\n<b>Uploaded :</b> {sent}\n' \
-            f'<b>Yang lagi didownload:</b> {recv}\n\n' \
+    stats = f'<b>🤖 The Robot Stats Monitor 🤖</b>\n\n<b>⏱️ Bot Uptime:</b> {currentTime}\n' \
+            f'<b>Total disk space🗄️:</b> {total}\n' \
+            f'<b>Used 🗃️:</b> {used}  ' \
+            f'<b>Free 🗃️:</b> {free}\n\n' \
+            f'📇Data Usage📇\n<b>Uploaded :</b> {sent}\n' \
+            f'<b>Downloaded:</b> {recv}\n\n' \
             f'<b>CPU 🖥️:</b> {cpuUsage}% ' \
             f'<b>RAM ⛏️:</b> {memory}% ' \
             f'<b>Disk 🗄️:</b> {disk}%'
@@ -43,15 +43,15 @@ def stats(update, context):
 @run_async
 def start(update, context):
     start_Thisstring = f'''
-    Iini bot bisa mirror link gd/mediafire/zippy/mega
-Type /{BotCommands.HelpCommand} kalo pengen liat perintah bot
+    🤖 This is a bot which can mirror all your links to Google drive!
+Type /{BotCommands.HelpCommand} to get a list of available commands.
 '''
     sendMessage(start_string, context.bot, update)
 
 
 @run_async
 def restart(update, context):
-    restart_message = sendMessage("Bentar lagi restart", context.bot, update)
+    restart_message = sendMessage("🛠 Bot Restarting, Please wait !", context.bot, update)
     # Save restart message object in order to reply to it after restarting
     fs_utils.clean_all()
     with open('restart.pickle', 'wb') as status:
@@ -62,9 +62,9 @@ def restart(update, context):
 @run_async
 def ping(update, context):
     start_time = int(round(time.time() * 1000))
-    reply = sendMessage("Starting Ping", context.bot, update)
+    reply = sendMessage("🏓 Starting Ping", context.bot, update)
     end_time = int(round(time.time() * 1000))
-    editMessage(f'{end_time - start_time} ms', reply)
+    editMessage(f'🏓 Pong {end_time - start_time} ms', reply)
 
 
 @run_async
@@ -75,41 +75,41 @@ def log(update, context):
 @run_async
 def bot_help(update, context):
     help_string = f'''
-/{BotCommands.HelpCommand}: Tutor botnya
+/{BotCommands.HelpCommand} 📣 : To get this message
 
-/{BotCommands.MirrorCommand} [download_url][magnet_link]: Mulai Mirror bot dengan perintah /kaca (link mega/google drive/zippy/mediafire)
+/{BotCommands.MirrorCommand} 📣 [download_url][magnet_link]: Start mirroring the link to google drive
 
-/{BotCommands.UnzipMirrorCommand} [download_url][magnet_link] : Sama kayak perintah mirror tapi bedanya ini langsung di ekstrak
+/{BotCommands.UnzipMirrorCommand} 📣  [download_url][magnet_link] : starts mirroring and if downloaded file is any archive , extracts it to google drive
 
-/{BotCommands.TarMirrorCommand} [download_url][magnet_link]: Sama kayak perintah mirror tapi bedanya ini menjadikan file ekstensi .tar
+/{BotCommands.TarMirrorCommand} 📣  [download_url][magnet_link]: start mirroring and upload the archived (.tar) version of the download
 
-/{BotCommands.WatchCommand} [youtube-dl supported link]: Nge download video dari youtube. Click /{BotCommands.WatchCommand} for more help.
+/{BotCommands.WatchCommand} 📣  [youtube-dl supported link]: Mirror through youtube-dl. Click /{BotCommands.WatchCommand} for more help.
 
-/{BotCommands.TarWatchCommand} [youtube-dl supported link]: Sama kayak perintah watch tp bedanya ini diubah ke ekstensi .tar
+/{BotCommands.TarWatchCommand} 📣 [youtube-dl supported link]: Mirror through youtube-dl and tar before uploading
 
-/{BotCommands.CancelMirror} : Ngebatalin Mirror
+/{BotCommands.CancelMirror} 📣  : Reply to the message by which the download was initiated and that download will be cancelled
 
-/{BotCommands.StatusCommand}: Ngeliat status mirror
+/{BotCommands.StatusCommand} 📣 : Shows a status of all the downloads
 
-/{BotCommands.ListCommand} [search term]: Mencari list di google drive
+/{BotCommands.ListCommand} 📣  [search term]: Searches the search term in the Google drive, if found replies with the link
 
-/{BotCommands.StatsCommand}: Menampilkan system bot
+/{BotCommands.StatsCommand} 📣:  Show Stats of the machine the bot is hosted on
 
-/{BotCommands.AuthorizeCommand}: Supaya bot bisa digunain oleh orang lain/grup
+/{BotCommands.AuthorizeCommand} 📣 : Authorize a chat or a user to use the bot (Can only be invoked by owner of the bot)
 
-/{BotCommands.LogCommand}: Log bot 
+/{BotCommands.LogCommand} 📣 : Get a log file of the bot. Handy for getting crash reports
 
-/{BotCommands.SpeedCommand} : Cek kecepatan internet
+/{BotCommands.SpeedCommand} : Doing check on speedtest
 
-/{BotCommands.CloneCommand} : Clone link Google Drive
+/{BotCommands.CloneCommand} : Clone GDrive link to Google Drive
 
-/{BotCommands.UsageCommand}: ngeliat sisa penggunaan bulan ini
+/{BotCommands.UsageCommand} : Displays the remaining usage dyno for this month
 
-/tolongturrent: buat nyari link torrent
+/helptorrent 📣 : Show command to search torrent or magnet.
 
-/wibu: buat nyari anime,manga 
+/weeb 📣 : Show command to search Anime and Manga .
 
-/tolongstiker: buat bikin stiker
+/helpsticker 📣 : buat bikin stiker
 '''
     sendMessage(help_string, context.bot, update)
 
