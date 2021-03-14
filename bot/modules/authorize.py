@@ -38,6 +38,7 @@ def authorize(update,context):
                     file.write(f'{user_id}\n')
                     AUTHORIZED_CHATS.add(user_id)
                 msg = 'Person Authorized to use the bot now!'
+                
                 else:
                     msg = 'Person already authorized to use the bot now!'
         sendMessage(msg, context.bot, update)
