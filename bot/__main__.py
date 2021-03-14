@@ -8,14 +8,14 @@ import time
 from pyrogram import idle
 from telegram.ext import CommandHandler, run_async
 from bot import dispatcher, updater, botStartTime
-from bot.gd.gDrive import GoogleDriveHelper
-from bot.gd.fs_utils import get_readable_file_size
-from bot.gd import LOGGER, dispatcher, updater, bot
-from bot.gd.config import BOT_TOKEN, OWNER_ID, GDRIVE_FOLDER_ID
-from bot.gd.decorators import is_authorised, is_owner
+from .gd.gDrive import GoogleDriveHelper
+from .gd.fs_utils import get_readable_file_size
+from .gd import LOGGER, dispatcher, updater, bot
+from .gd.config import BOT_TOKEN, OWNER_ID, GDRIVE_FOLDER_ID
+from .gd.decorators import is_authorised, is_owner
 from telegram.error import TimedOut, BadRequest
-from bot.gd.clone_status import CloneStatus
-from bot.gd.msg_utils import deleteMessage, sendMessage
+from .gd.clone_status import CloneStatus
+from .gd.msg_utils import deleteMessage, sendMessage
 from bot.helper.ext_utils import fs_utils
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.message_utils import *
