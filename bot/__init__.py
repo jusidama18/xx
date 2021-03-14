@@ -79,7 +79,8 @@ try:
     achats = achats.split(" ")
     for chats in achats:
         AUTHORIZED_CHATS.add(int(chats))
-
+except:
+    pass
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
     OWNER_ID = int(getConfig('OWNER_ID'))
@@ -117,8 +118,7 @@ telegraph.create_account(short_name=sname)
 telegraph_token = telegraph.get_access_token()
 LOGGER.info("Telegraph Token Generated: '" + telegraph_token + "'")
         
-except:
-    pass
+
 
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
