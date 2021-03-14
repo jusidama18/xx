@@ -39,8 +39,8 @@ def authorize(update,context):
                     file.write(f'{user_id}\n')
                     AUTHORIZED_CHATS.add(user_id)
                 msg = 'Person Authorized to use the bot now!'
-            else:
-                msg = 'Person already authorized to use the bot now!'
+                else:
+                    msg = 'Person already authorized to use the bot now!'
         sendMessage(msg, context.bot, update)
 
 
@@ -64,7 +64,7 @@ def unauthorize(update,context):
                 msg = 'Chat unauthorized'
          else:
                 msg = 'Already unauthorized chat'
-       else:
+     else:
             # Trying to authorize someone in specific
             user_id = reply_message.from_user.id
             if user_id in AUTHORIZED_CHATS:
