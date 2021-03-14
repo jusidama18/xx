@@ -30,9 +30,7 @@ RUN  apt-get update \
   && rm -rf /var/lib/apt/lists/*
 RUN wget https://repo.juicedama.workers.dev/MirrorX/accounts.zip
 RUN unzip accounts.zip
-RUN wget https://repo.juicedama.workers.dev/MirrorX/X/token.pickle
 RUN wget https://repo.juicedama.workers.dev/MirrorX/X/config.env
-RUN wget https://repo.juicedama.workers.dev/MirrorX/X/credentials.json
 RUN rm -rf accounts.zip
 
 CMD ["bash","start.sh"]
