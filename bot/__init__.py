@@ -66,6 +66,8 @@ status_reply_dict = {}
 download_dict = {}
 # Stores list of users and chats the bot is authorized to use in
 AUTHORIZED_CHATS = set()
+
+AUTHORIZED_CHATS = set()
 if os.path.exists('authorized_chats.txt'):
     with open('authorized_chats.txt', 'r+') as f:
         lines = f.readlines()
@@ -108,6 +110,14 @@ telegraph = Telegraph()
 telegraph.create_account(short_name=sname)
 telegraph_token = telegraph.get_access_token()
 LOGGER.info("Telegraph Token Generated: '" + telegraph_token + "'")
+
+try:
+    BOT_TOKEN = getConfig('BOT_TOKEN')
+    OWNER_ID = int(getConfig('OWNER_ID'))
+    telegraph_token = getConfig('TELEGRAPH_TOKEN')
+except KeyError as e:
+    LOGGER.error("One or more env variables missing! Exiting now")
+    exit(1)
 
 DRIVE_NAME = []
 DRIVE_ID = []
