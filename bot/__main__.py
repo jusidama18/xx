@@ -201,7 +201,7 @@ def main():
     stats_handler = CommandHandler(BotCommands.StatsCommand,
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter)
-    clone_handler = CommandHandler(BotCommands.clnCommand, cloneNode)
+    clone_handler = CommandHandler(BotCommands.clonCommand, cloneNode)
     helps_handler = CommandHandler(BotCommands.hclnCommand, helper)
     
     dispatcher.add_handler(clone_handler)
