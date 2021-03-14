@@ -7,7 +7,6 @@ from telegram.ext import Filters
 from telegram import Update
 from bot.helper.telegram_helper.bot_commands import BotCommands
 
-
 @run_async
 def authorize(update,context):
     reply_message = update.message.reply_to_message
