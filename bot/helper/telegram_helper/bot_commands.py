@@ -20,7 +20,7 @@ class _BotCommands:
         self.WatchCommand = 'ytdl'
         self.TarWatchCommand = 'tarytdl2'
         self.deleteCommand = 'del'
-        self.clnCommand = 'cln'
+        self.clonCommand = 'cln'
         self.hclnCommand = 'hcln'
         self.UsageCommand = 'usage'
         self.AuthorizedUsersCommand = 'users'
