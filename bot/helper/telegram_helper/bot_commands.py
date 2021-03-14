@@ -21,6 +21,7 @@ class _BotCommands:
         self.TarWatchCommand = 'tarytdl2'
         self.deleteCommand = 'del'
         self.clnCommand = 'cln'
+        self.hclnCommand = 'hcln'
         self.UsageCommand = 'usage'
         self.AuthorizedUsersCommand = 'users'
         
