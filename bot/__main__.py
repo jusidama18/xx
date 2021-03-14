@@ -223,7 +223,6 @@ def main():
     LOGGER.info("Bot Started!")
     signal.signal(signal.SIGINT, fs_utils.exit_clean_up)
     updater.start_polling()
-    LOGGER.info("Yeah I'm Running!")
     updater.idle()
     
 main()
