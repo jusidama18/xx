@@ -1,4 +1,4 @@
-from bot.gd.fs_utils import get_readable_file_size
+from .gd.fs_utils import get_readable_file_size
 
 class CloneStatus:
     def __init__(self, size=0):
