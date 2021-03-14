@@ -1,5 +1,5 @@
 from functools import wraps
-from .gd.config import OWNER_ID, AUTHORISED_USERS
+from bot.config import OWNER_ID, AUTHORISED_USERS
 
 def is_authorised(func):
     @wraps(func)
