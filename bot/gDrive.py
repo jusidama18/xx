@@ -18,9 +18,9 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from tenacity import *
 
-from .gd.config import IS_TEAM_DRIVE, \
+from bot.config import IS_TEAM_DRIVE, \
             USE_SERVICE_ACCOUNTS, GDRIVE_FOLDER_ID, INDEX_URL
-from .gd.fs_utils import get_mime_type
+from bot.fs_utils import get_mime_type
 
 logging.getLogger('googleapiclient.discovery').setLevel(logging.ERROR)
 socket.setdefaulttimeout(650) # https://github.com/googleapis/google-api-python-client/issues/632#issuecomment-541973021
