@@ -426,18 +426,18 @@ def makepack_internal(
 @run_async
 def stickhelp(update, context):
     help_string = '''
-• `/idstiker`*:* Balas pesan stiker buat nyari id stikernya
-• `/dapatstiker`*:* balas ke pesan stiker buat ku upload jadi PNG/Foto
-• `/curry`*:* balas sebuah pesan stiker nanti aku curry hehe ><
+• `/idstick`*:* Balas pesan stiker buat nyari id stikernya
+• `/getstick`*:* balas ke pesan stiker buat ku upload jadi PNG/Foto
+• `/adds`*:* balas sebuah pesan stiker nanti aku curry hehe ><
 • `/sticker`*:* Cari stiker yang kamu pengen
 '''
     update.effective_message.reply_photo("https://telegra.ph/file/db03910496f06094f1f7a.jpg", help_string, parse_mode=ParseMode.MARKDOWN)
 
-STICKERID_HANDLER = CommandHandler("idstiker", stickerid)
-GETSTICKER_HANDLER = CommandHandler("dapatstiker", getsticker)
-KANG_HANDLER = CommandHandler("curry", kang)
+STICKERID_HANDLER = CommandHandler("idstick", stickerid)
+GETSTICKER_HANDLER = CommandHandler("getstick", getsticker)
+KANG_HANDLER = CommandHandler("adds", kang)
 STICKERS_HANDLER = CommandHandler("sticker", cb_sticker)
-STICKHELP_HANDLER = CommandHandler("tolongstiker", stickhelp)
+STICKHELP_HANDLER = CommandHandler("helpsticker", stickhelp)
 
 
 dispatcher.add_handler(STICKERS_HANDLER)
