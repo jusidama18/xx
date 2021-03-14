@@ -10,7 +10,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 from telegram import InlineKeyboardMarkup
-from bot.helper.telegram_helper import button_build
+from bot.helper.telegram_helper import button_builder
 from bot import DRIVE_NAME, DRIVE_ID, INDEX_URL, telegra_ph
 
 LOGGER = logging.getLogger(__name__)
@@ -140,7 +140,7 @@ class GoogleDriveHelper:
             self.edit_telegraph()
 
         msg = f" Search Results For {fileName} 👇🏻 "
-        buttons = button_build.ButtonMaker()   
+        buttons = button_builder.ButtonMaker()   
         buttons.buildbutton("👉🏻 Click Here 👈🏻", f"https://telegra.ph/{self.path[0]}")
 
         return msg, InlineKeyboardMarkup(buttons.build_menu(1))
