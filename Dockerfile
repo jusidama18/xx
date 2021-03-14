@@ -1,4 +1,5 @@
 FROM iamliquidx/megasdk:latest
+FROM ubuntu:18.04
 
 WORKDIR /usr/src/app
 RUN chmod 777 /usr/src/app
