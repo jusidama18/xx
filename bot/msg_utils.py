@@ -1,4 +1,4 @@
-from .gd import LOGGER
+from bot import LOGGER
 from telegram.message import Message
 from telegram.update import Update
 
