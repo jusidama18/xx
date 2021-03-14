@@ -2,7 +2,7 @@ import os
 import pickle
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
-from .gd import LOGGER
+from bot import LOGGER
 
 import json
 import logging
