@@ -9,9 +9,11 @@ from bot.helper.telegram_helper.bot_commands import BotCommands
 def list_drive(update,context):
     try:
         search = update.message.text.split(' ',maxsplit=1)[1]
-        LOGGER.info(f"Searching: {search}")
+        
+        
         reply = sendMessage('Wait a minute to searching the file you are looking for.\n\nSearching...', context.bot, update)
-        LOGGER.info(f"Searching: {search}")
+        
+        LOGGER.info(f"⌛ Searching : {search} 🔎")
         gdrive = GoogleDriveHelper(None)
         msg, button = gdrive.drive_list(search)
 
@@ -21,7 +23,7 @@ def list_drive(update,context):
             editMessage('No result found.', reply, button)
 
     except IndexError:
-        sendMessage('Send a search key along with command', context.bot, update)
+        sendMessage('Send a search key along with command 🤔', context.bot, update)
         return
 
 
