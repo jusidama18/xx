@@ -61,8 +61,8 @@ def dev_plus(func):
             pass
         else:
             update.effective_message.reply_text(
-                "Hanya developer yang bisa jalanin ini command"
-                " Kamu gk ada akses buat jalanin nya")
+                "Only Developer can run this command"
+                "You don't have access to use it")
 
     return is_dev_plus_func
 @dev_plus
