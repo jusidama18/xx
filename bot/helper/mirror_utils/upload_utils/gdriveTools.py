@@ -331,30 +331,11 @@ class GoogleDriveHelper:
         msg = ""
         LOGGER.info(f"File ID: {file_id}")
         try:
-            meta = self.__service.files().get(supportsAllDrives=True, fileId=file_id,
-                                              fields="name,id,mimeType,size").execute()
-            dest_meta = self.__service.files().get(supportsAllDrives=True, fileId=self.gparentid,
-                                              fields="name,id,size").execute()
-            status.SetMainFolder(meta.get('name'), self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(meta.get('id')))
-            status.SetDestinationFolder(dest_meta.get('name'), self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dest_meta.get('id')))
-        except Exception as e:
-            return f"{str(e).replace('>', '').replace('<', '')}"
-        if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
-            dir_id = self.check_folder_exists(meta.get('name'), self.gparentid)
-            if not dir_id:
-                dir_id = self.create_directory(meta.get('name'), self.gparentid)
-            try:
-                self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
-            except Exception as e:
-                if isinstance(e, RetryError):
-                    LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
-                    err = e.last_attempt.exception()
-                else:
-                    err = str(e).replace('>', '').replace('<', '')
-                LOGGER.error(err)
-                return err
-            status.set_status(True)
-                msg += f'<b>Filename : </b><code>{meta.get("name")}</code>\n<b>Size : </b>{get_readable_file_size(self.transferred_size)}'
+            meta = self.getFileMetadata(file_id)
+            if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
+                dir_id = self.create_directory(meta.get('name'), parent_id)
+                result = self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id)
+                msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n<i>👾<b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
                 buttons = button_build.ButtonMaker()
                 if SHORTENER is not None and SHORTENER_API is not None:
