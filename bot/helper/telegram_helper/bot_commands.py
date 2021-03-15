@@ -19,7 +19,7 @@ class _BotCommands:
         self.CloneCommand = "clone2"
         self.WatchCommand = 'ytdl'
         self.TarWatchCommand = 'tarytdl2'
-        self.deleteCommand = 'del'
+        self.DeleteCommand = 'del'
         self.ClonCommand = 'cln'
         self.HelpClonCommand = 'hcln'
         self.TorrentCommand = 'tshelp'
