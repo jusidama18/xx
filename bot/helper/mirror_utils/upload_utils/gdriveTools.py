@@ -32,7 +32,7 @@ TELEGRAPHLIMIT = 95
 
 
 class GoogleDriveHelper:
-    def __init__(self, name=None, listener=None):
+    def __init__(self, name=None, listener=None, GFolder_ID=GDRIVE_FOLDER_ID):
         self.__G_DRIVE_TOKEN_FILE = "token.pickle"
         # Check https://developers.google.com/drive/scopes for all available scopes
         self.__OAUTH_SCOPE = ['https://www.googleapis.com/auth/drive']
@@ -58,6 +58,10 @@ class GoogleDriveHelper:
         self.update_interval = 3
         self.telegraph_content = []
         self.path = []
+        if not len(GFolder_ID) == 33 or not len(GFolder_ID) == 19:
+            self.gparentid = self.getIdFromUrl(GFolder_ID)
+        else:
+            self.gparentid = GFolder_ID
 
     def cancel(self):
         self.is_cancelled = True
