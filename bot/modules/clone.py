@@ -1,4 +1,4 @@
-from telegram.ext import CommandHandler
+from telegram.ext import CommandHandler, run_async
 from bot.helper.mirror_utils.upload_utils.gdriveTools import GoogleDriveHelper
 from bot.helper.telegram_helper.message_utils import *
 from bot.helper.telegram_helper.filters import CustomFilters
@@ -7,7 +7,7 @@ from bot.helper.ext_utils.bot_utils import new_thread
 from bot import dispatcher
 
 
-@new_thread
+@run_async
 def cloneNode(update,context):
     args = update.message.text.split(" ")
     if len(args) > 1:
