@@ -6,7 +6,6 @@ import feedparser
 from telegram.ext import run_async, CommandHandler
 from telegram import ParseMode
 from bot import dispatcher
-from bot.helper.telegram_helper.bot_commands import BotCommands
 from urllib.parse import quote as urlencode, urlsplit
 from pyrogram import Client, filters
 from pyrogram.parser import html as pyrogram_html
