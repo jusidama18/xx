@@ -336,8 +336,7 @@ class GoogleDriveHelper:
                 dir_id = self.check_folder_exists(meta.get('name'), self.gparentid)
                     if not dir_id:
                         dir_id = self.create_directory(meta.get('name'), self.gparentid)
-            try:
-                self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
+                result self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
             except Exception as e:
             if isinstance(e, RetryError):
                 LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
