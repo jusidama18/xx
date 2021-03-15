@@ -109,13 +109,13 @@ def bot_help(update, context):
 
 /{BotCommands.LogCommand} 📣 : Get a log file of the bot. Handy for getting crash reports
 
-/{BotCommands.SpeedCommand} : Doing check on speedtest
+/{BotCommands.SpeedCommand} 📣 : Doing check on speedtest
 
-/{BotCommands.CloneCommand} : Clone GDrive link to Google Drive
+/{BotCommands.CloneCommand} 📣 : Clone GDrive link to Google Drive
 
-/{BotCommands.UsageCommand} : Displays the remaining usage dyno for this month
+/{BotCommands.UsageCommand} 📣 : Displays the remaining usage dyno for this month
 
-/helptorrent 📣 : Show command to search torrent or magnet.
+/{BotCommands.TorrentCommand} 📣 : Show command to search torrent or magnet.
 
 /weeb 📣 : Show command to search Anime and Manga .
 
