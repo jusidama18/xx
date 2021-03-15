@@ -332,16 +332,9 @@ class GoogleDriveHelper:
         LOGGER.info(f"File ID: {file_id}")
         try:
             meta = self.getFileMetadata(file_id)
-            dest_meta = self.getFileMetadata(file_id)
-            
-            status.SetMainFolder(meta.get('name'), self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(meta.get('id')))
-            status.SetDestinationFolder(dest_meta.get('name'), self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dest_meta.get('id')))
-            
-                if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
-                dir_id = self.check_folder_exists(meta.get('name'), self.gparentid)
-                    if not dir_id:
-                        dir_id = self.create_directory(meta.get('name'), self.gparentid)
-                result self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
+            if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
+                dir_id = self.create_directory(meta.get('name'), parent_id)
+                result = self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
             except Exception as e:
             if isinstance(e, RetryError):
                 LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
