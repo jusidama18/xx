@@ -138,8 +138,8 @@ async def nyaa_callback(client, callback_query):
 @run_async
 def searchhelp(update, context):
     help_string = '''
-• /torrent <i>[search query]</i>
-• /meong <i>[search query]</i>
+• /ts <i>[search query]</i>
+• /nyaa <i>[search query]</i>
 • /nyaasi <i>[search query]</i>
 
 • /sts <i>[search query]</i>
@@ -148,5 +148,5 @@ def searchhelp(update, context):
     update.effective_message.reply_photo("https://f.cyberdrop.cc/prrgsr-4KHsJD3j.png", help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler("helptorrent", searchhelp)
+SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
