@@ -112,7 +112,7 @@ class GoogleDriveHelper:
         for parent_id in DRIVE_ID :
             response = self.drive_query(parent_id, fileName)    
             INDEX += 1          
-            if response["files"]:
+            if response:
                 if add_title_msg == True:
                     msg = f'<h3><img src="https://f.cyberdrop.cc/image-removebg-preview%20(1)-JUhZCiMc.png" alt="Paris" class="center"><br>🔎 Search Results for : {fileName}</h3><br><b><a href="https://t.me/jusidama">@Jusidama #Search-Index</a></b><br><br><b><a href="https://groups.google.com/g/jusidama-folder">Join Our Team Drive</a> | <a href="https://index.juicedama.workers.dev">Index Multi Drive</a></b></br><br><br>'
                     add_title_msg = False
