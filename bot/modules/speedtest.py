@@ -9,7 +9,7 @@ from telegram.ext import CallbackContext, Filters, run_async, CommandHandler
 @run_async
 def speedtest(update, context):
     message = update.effective_message
-    ed_msg = message.reply_text("Bentar lagi jalanin tes kecepatan")
+    ed_msg = message.reply_text("Running Speed Test . . . ")
     test = Speedtest()
     test.get_best_server()
     test.download()
@@ -39,7 +39,7 @@ def speed_convert(size):
     """Hi human, you can't read bytes?"""
     power = 2 ** 10
     zero = 0
-    units = {0: "", 1: "Kb/s", 2: "MB/s", 3: "Gb/s", 4: "Tb/s"}
+    units = {0: "", 1: "KB/s", 2: "MB/s", 3: "GB/s", 4: "TB/s"}
     while size > power:
         size /= power
         zero += 1
