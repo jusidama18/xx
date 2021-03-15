@@ -14,7 +14,7 @@ from bot import dispatcher, updater, bot
 
 import time
 
-@run_async
+@new_thread
 @is_authorised
 def cloneNode(update,context):
     args = update.message.text.split(" ")
@@ -47,7 +47,7 @@ def cloneNode(update,context):
     else:
         sendMessage("⚙️ Provide G-Drive Shareable Link to Clone.",context.bot,update)
 
-@run_async
+@new_thread
 def sendCloneStatus(update, context, status, msg, link):
     old_text = ''
     while not status.done():
