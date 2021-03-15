@@ -88,12 +88,14 @@ class GoogleDriveHelper:
 
     @staticmethod
     def getIdFromUrl(link: str):
+        if len(link) in [33, 19]:
+            return link
         if "folders" in link or "file" in link:
-            regex = r"https://drive\.google\.com/(drive)?/?u?/?\d?/?(mobile)?/?(file)?(folders)?/?d?/([-\w]+)[?+]?/?(w+)?"
+            regex = r"https://drive\.google\.com/(drive)?/?u?/?\d?/?(mobile)?/?(file)?(folders)?/?d?/(?P<id>[-\w]+)[?+]?/?(w+)?"
             res = re.search(regex,link)
             if res is None:
                 raise IndexError("❌ GDrive ID not found. ❌")
-            return res.group(5)
+            return res.group('id')
         parsed = urlparse.urlparse(link)
         return parse_qs(parsed.query)['id'][0]
 
