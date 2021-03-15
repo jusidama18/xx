@@ -19,6 +19,7 @@ def cloneNode(update,context):
         except IndexError:
             ignoreList = []
         
+        DESTINATION_ID = GDRIVE_FOLDER_ID
         try:
             DESTINATION_ID = args[2]
             print(DESTINATION_ID)
