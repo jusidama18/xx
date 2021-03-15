@@ -17,8 +17,8 @@ from math import floor
 import wget
 import youtube_dl as ytdl
 
-from userge import userge, Message, Config, pool
-from userge.utils import time_formatter, humanbytes
+from bot import bot, Message, Config, pool
+from bot.utils import time_formatter, humanbytes
 from .upload import upload
 
 LOGGER = userge.getLogger(__name__)
