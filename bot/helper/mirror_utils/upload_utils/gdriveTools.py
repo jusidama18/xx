@@ -321,7 +321,7 @@ class GoogleDriveHelper:
                 break
         return files
 
-    def clone(self, link):
+    def clone(self, link, status, ignoreList=[]):
         self.transferred_size = 0
         try:
             file_id = self.getIdFromUrl(link)
@@ -331,10 +331,29 @@ class GoogleDriveHelper:
         msg = ""
         LOGGER.info(f"File ID: {file_id}")
         try:
-            meta = self.getFileMetadata(file_id)
-            if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
-                dir_id = self.create_directory(meta.get('name'), parent_id)
-                result = self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id)
+            meta = self.__service.files().get(supportsAllDrives=True, fileId=file_id,
+                                              fields="name,id,mimeType,size").execute()
+            dest_meta = self.__service.files().get(supportsAllDrives=True, fileId=self.gparentid,
+                                              fields="name,id,size").execute()
+            status.SetMainFolder(meta.get('name'), self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(meta.get('id')))
+            status.SetDestinationFolder(dest_meta.get('name'), self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dest_meta.get('id')))
+        except Exception as e:
+            return f"{str(e).replace('>', '').replace('<', '')}"
+        if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
+            dir_id = self.check_folder_exists(meta.get('name'), self.gparentid)
+            if not dir_id:
+                dir_id = self.create_directory(meta.get('name'), self.gparentid)
+            try:
+                self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
+            except Exception as e:
+                if isinstance(e, RetryError):
+                    LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
+                    err = e.last_attempt.exception()
+                else:
+                    err = str(e).replace('>', '').replace('<', '')
+                LOGGER.error(err)
+                return err
+            status.set_status(True)
                 msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n<i>👾<b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
                 buttons = button_build.ButtonMaker()
@@ -392,33 +411,54 @@ class GoogleDriveHelper:
             return err, ""
         return msg, InlineKeyboardMarkup(buttons.build_menu(2))
 
-    def cloneFolder(self, name, local_path, folder_id, parent_id):
-        LOGGER.info(f"🔄 Syncing: {local_path}")
-        files = self.getFilesByFolderId(folder_id)
-        new_id = None
+    def cloneFolder(self, name, local_path, folder_id, parent_id, status, ignoreList=[]):
+        page_token = None
+        q = f"'{folder_id}' in parents"
+        files = []
+        LOGGER.info(f"Syncing: {local_path}")
+        while True:
+            response = self.__service.files().list(supportsTeamDrives=True,
+                                                   includeTeamDriveItems=True,
+                                                   q=q,
+                                                   spaces='drive',
+                                                   fields='nextPageToken, files(id, name, mimeType,size)',
+                                                   pageToken=page_token).execute()
+            for file in response.get('files', []):
+                files.append(file)
+            page_token = response.get('nextPageToken', None)
+            if page_token is None:
+                break
         if len(files) == 0:
             return parent_id
         for file in files:
             if file.get('mimeType') == self.__G_DRIVE_DIR_MIME_TYPE:
                 file_path = os.path.join(local_path, file.get('name'))
-                current_dir_id = self.create_directory(file.get('name'), parent_id)
-                new_id = self.cloneFolder(file.get('name'), file_path, file.get('id'), current_dir_id)
+                current_dir_id = self.check_folder_exists(file.get('name'), parent_id)
+                if not current_dir_id:
+                    current_dir_id = self.create_directory(file.get('name'), parent_id)
+                if not str(file.get('id')) in ignoreList:
+                    self.cloneFolder(file.get('name'), file_path, file.get('id'), current_dir_id, status, ignoreList)
+                else:
+                    LOGGER.info("Ignoring FolderID from clone: " + str(file.get('id')))
             else:
                 try:
-                    self.transferred_size += int(file.get('size'))
+                    if not self.check_file_exists(file.get('name'), parent_id):
+                        status.checkFileExist(False)
+                        self.copyFile(file.get('id'), parent_id, status)
+                        self.transferred_size += int(file.get('size'))
+                        status.set_name(file.get('name'))
+                        status.add_size(int(file.get('size')))
+                    else:
+                        status.checkFileExist(True)
                 except TypeError:
                     pass
-                try:
-                    self.copyFile(file.get('id'), parent_id)
-                    new_id = parent_id
                 except Exception as e:
                     if isinstance(e, RetryError):
-                        LOGGER.info(f"⚙️ Total Attempts: {e.last_attempt.attempt_number}")
+                        LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
                         err = e.last_attempt.exception()
                     else:
                         err = e
                     LOGGER.error(err)
-        return new_id
 
     @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(5),
            retry=retry_if_exception_type(HttpError), before=before_log(LOGGER, logging.DEBUG))
