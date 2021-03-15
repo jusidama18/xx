@@ -157,6 +157,7 @@ def cloneNode(update, context):
         sendMessage(result, context.bot, update)
     else:
         sendMessage("Please Provide a Google Drive Shared Link to Clone.", bot, update)
+
 @run_async
 def sendCloneStatus(update, context, status, msg, link):
     old_text = ''
