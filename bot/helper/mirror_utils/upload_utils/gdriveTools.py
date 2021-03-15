@@ -470,7 +470,57 @@ class GoogleDriveHelper:
                 f'accounts/{SERVICE_ACCOUNT_INDEX}.json',
                 scopes=self.__OAUTH_SCOPE)
         return build('drive', 'v3', credentials=credentials, cache_discovery=False)
+    
+    @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(15),
+           retry=retry_if_exception_type(HttpError), before=before_log(LOGGER, logging.DEBUG))
+    def check_folder_exists(self, fileName, u_parent_id):
+        fileName = clean_name(fileName)
+        # Create Search Query for API request.
+        query = f"'{u_parent_id}' in parents and (name contains '{fileName}' and trashed=false)"
+        response = self.__service.files().list(supportsTeamDrives=True,
+                                               includeTeamDriveItems=True,
+                                               q=query,
+                                               spaces='drive',
+                                               pageSize=5,
+                                               fields='files(id, name, mimeType, size)',
+                                               orderBy='modifiedTime desc').execute()
+        for file in response.get('files', []):
+            if file.get('mimeType') == "application/vnd.google-apps.folder":  # Detect Whether Current Entity is a Folder or File.
+                    driveid = file.get('id')
+                    return driveid
+    
+    @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(15),
+           retry=retry_if_exception_type(HttpError), before=before_log(LOGGER, logging.DEBUG))
+    def check_file_exists(self, fileName, u_parent_id):
+        fileName = clean_name(fileName)
+        # Create Search Query for API request.
+        query = f"'{u_parent_id}' in parents and (name contains '{fileName}' and trashed=false)"
+        response = self.__service.files().list(supportsTeamDrives=True,
+                                               includeTeamDriveItems=True,
+                                               q=query,
+                                               spaces='drive',
+                                               pageSize=5,
+                                               fields='files(id, name, mimeType, size)',
+                                               orderBy='modifiedTime desc').execute()
+        for file in response.get('files', []):
+            if file.get('mimeType') != "application/vnd.google-apps.folder":
+                    # driveid = file.get('id')
+                    return file
 
+
+    def get_readable_file_size(size_in_bytes) -> str:
+        SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+        if size_in_bytes is None:
+            return '0B'
+        index = 0
+        while size_in_bytes >= 1024:
+            size_in_bytes /= 1024
+            index += 1
+        try:
+            return f'{round(size_in_bytes, 2)}{SIZE_UNITS[index]}'
+        except IndexError:
+            return 'File too large'
+                                                     
     def edit_telegraph(self):
         nxt_page = 1 
         prev_page = 0
