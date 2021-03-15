@@ -7,6 +7,7 @@ from bot.helper.ext_utils.bot_utils import new_thread
 from bot.config import BOT_TOKEN, OWNER_ID, GDRIVE_FOLDER_ID
 from bot import dispatcher
 
+DESTINATION_ID = GDRIVE_FOLDER_ID
 
 @new_thread
 def cloneNode(update,context):
@@ -18,7 +19,6 @@ def cloneNode(update,context):
         except IndexError:
             ignoreList = []
         
-        DESTINATION_ID = GDRIVE_FOLDER_ID
         try:
             DESTINATION_ID = args[2]
             print(DESTINATION_ID)
