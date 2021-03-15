@@ -148,5 +148,5 @@ def searchhelp(update, context):
     update.effective_message.reply_photo("https://f.cyberdrop.cc/prrgsr-4KHsJD3j.png", help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp)
+SEARCHHELP_HANDLER = CommandHandler(BotCommands.TorrentCommand, searchhelp)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
