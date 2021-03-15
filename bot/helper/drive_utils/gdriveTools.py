@@ -11,7 +11,10 @@ from googleapiclient.errors import HttpError
 
 from telegram import InlineKeyboardMarkup
 from bot.helper.telegram_helper import button_build
+from bot.helper.ext_utils.bot_utils import *
+from bot.helper.ext_utils.fs_utils import get_mime_type, get_path_size
 from bot import DRIVE_NAME, DRIVE_ID, INDEX_URL, telegraph
+from telegraph import Telegraph
 
 LOGGER = logging.getLogger(__name__)
 logging.getLogger('googleapiclient.discovery').setLevel(logging.ERROR)
@@ -24,7 +27,9 @@ class GoogleDriveHelper:
         self.__G_DRIVE_TOKEN_FILE = "token.pickle"
         # Check https://developers.google.com/drive/scopes for all available scopes
         self.__OAUTH_SCOPE = ['https://www.googleapis.com/auth/drive']
+        self.__G_DRIVE_DIR_MIME_TYPE = "application/vnd.google-apps.folder"
         self.__service = self.authorize()
+        self.name = name
         self.telegraph_content = []
         self.path = []
 
@@ -86,23 +91,44 @@ class GoogleDriveHelper:
                 if nxt_page < self.num_of_path:
                     content += f'<b> | <a href="https://telegra.ph/{self.path[nxt_page]}">Next</a></b>'
                     nxt_page += 1
-            telegra_ph.edit_page(path = self.path[prev_page],
-                                 title = '⚡️ Database Index | Search Results',
+            Telegraph(access_token=telegraph_token).edit_page(path = self.path[prev_page],
+                                 title = 'John Torrent v.2.0 Bot Search',
+                                 author_name='Jusidama',
+                                 author_url='https://t.me/jusidama',
                                  html_content=content)
         return
-
+    
+    def escapes(self, str):
+        chars = ['\\', "'", '"', r'\a', r'\b', r'\f', r'\n', r'\r', r'\t']
+        for char in chars:
+            str = str.replace(char, '\\'+char)
+        return str
+    
     def drive_list(self, fileName):
         msg = ''
+        fileName = self.escapes(str(fileName))
+        # Create Search Query for API request.
+        query = f"'{parent_id}' in parents and (name contains '{fileName}')"
+        response = self.__service.files().list(supportsTeamDrives=True,
+                                               includeTeamDriveItems=True,
+                                               q=query,
+                                               spaces='drive',
+                                               pageSize=200,
+                                               fields='files(id, name, mimeType, size)',
+                                               orderBy='modifiedTime desc').execute()
+        
         INDEX = -1
         content_count = 0
         add_title_msg = True
         for parent_id in DRIVE_ID :
             response = self.drive_query(parent_id, fileName)    
             INDEX += 1          
-            if response:
+            if response["files"]:
                 if add_title_msg == True:
                     msg = f'<h3><img src="https://f.cyberdrop.cc/image-removebg-preview%20(1)-JUhZCiMc.png" alt="Paris" class="center"><br>🔎 Search Results for : {fileName}</h3><br><b><a href="https://t.me/jusidama">@Jusidama #Search-Index</a></b><br><br><b><a href="https://groups.google.com/g/jusidama-folder">Join Our Team Drive</a> | <a href="https://index.juicedama.workers.dev">Index Multi Drive</a></b></br><br><br>'
                     add_title_msg = False
+                
+                msg += f'<h4>Results : {fileName}</h4><br><br>'
                 msg += f"╾────────────╼<br><b>👑 {DRIVE_NAME[INDEX]} 👑</b><br>╾────────────╼<br>"
                 for file in response:
                     if file.get('mimeType') == "application/vnd.google-apps.folder":  # Detect Whether Current Entity is a Folder or File.
@@ -133,7 +159,13 @@ class GoogleDriveHelper:
             return "No result found.. 😞", None
 
         for content in self.telegraph_content :
-            self.path.append(telegra_ph.create_page(title = '⚡️ Database Index | Search Results',author_name='Jusidama',author_url='https://t.me/jusidama',html_content=content )['path'])
+                self.path.append(Telegraph(access_token=telegraph_token).create_page(
+                                                        title = 'John Torrent v.2.0 Bot Search',
+                                                        author_name='Jusidama',
+                                                        author_url='https://t.me/jusidama',
+                                                        html_content=content
+                                                        )['path'])
+
 
         self.num_of_path = len(self.path)      
         if self.num_of_path > 1:
