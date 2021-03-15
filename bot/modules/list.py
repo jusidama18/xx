@@ -10,12 +10,12 @@ def list_drive(update,context):
     try:
         search = update.message.text.split(' ',maxsplit=1)[1]
     except IndexError:
-        sendMessage('send a search key along with command', context.bot, update)
+        sendMessage('Send a search key along with command 🤔', context.bot, update)
         return
         
-    reply = sendMessage('Searching...', context.bot, update)
+    reply = sendMessage('Searching... Please wait! 😉', context.bot, update)
 
-    LOGGER.info(f"Searching: {search}")
+    LOGGER.info(f"⌛ Searching : {search} 🔎}")
         
     gdrive = GoogleDriveHelper(None)
     msg, button = gdrive.drive_list(search)
