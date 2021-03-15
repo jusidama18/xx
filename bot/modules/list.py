@@ -15,7 +15,7 @@ def list_drive(update,context):
         
     reply = sendMessage('Searching... Please wait! 😉', context.bot, update)
 
-    LOGGER.info(f"⌛ Searching : {search} 🔎}")
+    LOGGER.info(f"⌛ Searching : {search} 🔎")
         
     gdrive = GoogleDriveHelper(None)
     msg, button = gdrive.drive_list(search)
