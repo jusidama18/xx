@@ -22,6 +22,7 @@ class _BotCommands:
         self.deleteCommand = 'del'
         self.ClonCommand = 'cln'
         self.HelpClonCommand = 'hcln'
+        self.TorrentCommand = 'tshelp'
         self.UsageCommand = 'usage'
         self.AuthorizedUsersCommand = 'users'
         
