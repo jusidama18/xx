@@ -13,7 +13,7 @@ from telegram import InlineKeyboardMarkup
 from bot.helper.telegram_helper import button_build
 from bot.helper.ext_utils.bot_utils import *
 from bot.helper.ext_utils.fs_utils import get_mime_type, get_path_size
-from bot import DRIVE_NAME, DRIVE_ID, INDEX_URL, telegraph
+from bot import parent_id, DRIVE_NAME, DRIVE_ID, INDEX_URL, telegraph, telegraph_token
 from telegraph import Telegraph
 
 LOGGER = logging.getLogger(__name__)
