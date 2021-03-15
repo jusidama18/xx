@@ -9,19 +9,58 @@ from bot import dispatcher
 
 @new_thread
 def cloneNode(update,context):
-    args = update.message.text.split(" ",maxsplit=1)
+    args = update.message.text.split(" ")
     if len(args) > 1:
         link = args[1]
+        try:
+            ignoreList = args[-1].split(',')
+        except IndexError:
+            ignoreList = []
+        
+        DESTINATION_ID = GDRIVE_FOLDER_ID
+        try:
+            DESTINATION_ID = args[2]
+            print(DESTINATION_ID)
+        except IndexError:
+            pass
+            # Usage: /clone <FolderToClone> <Destination> <IDtoIgnoreFromClone>,<IDtoIgnoreFromClone>
+        
         msg = sendMessage(f"🔁 Cloning: <code>{link}</code>",context.bot,update)
-        gd = GoogleDriveHelper()
-        result, button = gd.clone(link)
+        gd = GoogleDriveHelper(GFolder_ID=DESTINATION_ID)
+        sendCloneStatus(update, context, status_class, msg, link)
+        result, button = gd.clone(link, status_class, ignoreList=ignoreList)
         deleteMessage(context.bot,msg)
+        status_class.set_status(True)
         if button == "":
             sendMessage(result,context.bot,update)
         else:
             sendMarkup(result,context.bot,update,button)
     else:
         sendMessage("⚙️ Provide G-Drive Shareable Link to Clone.",context.bot,update)
+
+@run_async
+def sendCloneStatus(update, context, status, msg, link):
+    old_text = ''
+    while not status.done():
+        sleeper(3)
+        try:
+            text=f'🔗 *Cloning:* [{status.MainFolderName}]({status.MainFolderLink})\n━━━━━━━━━━━━━━\n🗃️ *Current File:* `{status.get_name()}`\n⬆️ *Transferred*: `{status.get_size()}`\n📁 *Destination:* [{status.DestinationFolderName}]({status.DestinationFolderLink})'
+            if status.checkFileStatus():
+                text += f"\n🕒 *Checking Existing Files:* `{str(status.checkFileStatus())}`"
+            if not text == old_text:
+                msg.edit_text(text=text, parse_mode="Markdown", timeout=200)
+                old_text = text
+        except Exception as e:
+            LOGGER.error(e)
+            if str(e) == "Message to edit not found":
+                break
+            sleeper(2)
+            continue
+    return
+
+def sleeper(value, enabled=True):
+    time.sleep(int(value))
+    return
 
 clone_handler = CommandHandler(BotCommands.CloneCommand,cloneNode,filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
 dispatcher.add_handler(clone_handler)
