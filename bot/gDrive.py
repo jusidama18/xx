@@ -18,8 +18,11 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from tenacity import *
 
-from bot.config import IS_TEAM_DRIVE, \
-            USE_SERVICE_ACCOUNTS, GDRIVE_FOLDER_ID, INDEX_URL
+from telegram import InlineKeyboardMarkup
+from bot.helper.telegram_helper import button_build
+
+from bot import IS_TEAM_DRIVE, \
+            USE_SERVICE_ACCOUNTS, GDRIVE_FOLDER_ID, INDEX_URL, BUTTON_THREE_NAME, BUTTON_THREE_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, SHORTENER, SHORTENER_API
 from bot.fs_utils import get_mime_type
 
 logging.getLogger('googleapiclient.discovery').setLevel(logging.ERROR)
@@ -163,33 +166,54 @@ class GoogleDriveHelper:
                 LOGGER.error(err)
                 return err
             status.set_status(True)
-            msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b><code>{get_readable_file_size(self.transferred_size)}</code>\n\n' \
-                   f'👾 Join Our Team Drive To Access The G-Drive Link.\n👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.\n👾Permanent Banned if you break The Rules.\n\n#Uploads @Jusidama\n\n<a href="{self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)}">☁️ G-Drive Link ☁️</a>'
-            if INDEX_URL:
-                url = requests.utils.requote_uri(f'{INDEX_URL}/{meta.get("name")}/')
-                msg += f' | <a href="{url}">🔗 Index Link 🔗</a>'
-        else:
-            try:
-                file = self.check_file_exists(meta.get('id'), self.gparentid)
-                if file:
-                    status.checkFileExist(True)
-                if not file:
-                    status.checkFileExist(False)
-                    file = self.copyFile(meta.get('id'), self.gparentid, status)
-            except Exception as e:
-                if isinstance(e, RetryError):
-                    LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
-                    err = e.last_attempt.exception()
+            msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n<i>👾<b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'
+                durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
+                buttons = button_build.ButtonMaker()
+                if SHORTENER is not None and SHORTENER_API is not None:
+                    surl = requests.get('https://{}/api?api={}&url={}&format=text'.format(SHORTENER, SHORTENER_API, durl)).text
+                    buttons.buildbutton("☁️G-Drive Link☁️", surl)
                 else:
-                    err = str(e).replace('>', '').replace('<', '')
-                LOGGER.error(err)
-                return err
-            msg += f'<b>🔰 Name : </b><code>{file.get("name")}</code>\n\n<b>🔰 Size : </b><code>{get_readable_file_size(int(meta.get("size")))}</code>\n\n'
-            try:
-                msg += f'👾 Join Our Team Drive To Access The G-Drive Link.\n👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.\n👾Permanent Banned if you break The Rules.\n\n#Uploads @Jusidama\n\n<a href="{self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))}">☁️ G-Drive Link ☁️</a>'
+                    buttons.buildbutton("☁️G-Drive Link☁️", durl)
+                if INDEX_URL is not None:
+                    url = requests.utils.requote_uri(f'{INDEX_URL}/{meta.get("name")}/')
+                    if SHORTENER is not None and SHORTENER_API is not None:
+                        siurl = requests.get('https://{}/api?api={}&url={}&format=text'.format(SHORTENER, SHORTENER_API, url)).text
+                        buttons.buildbutton("🔗G-Index Link🔗", siurl)
+                    else:
+                        buttons.buildbutton("🔗G-Index Link🔗", url)
+                if BUTTON_THREE_NAME is not None and BUTTON_THREE_URL is not None:
+                    buttons.buildbutton(f"{BUTTON_THREE_NAME}", f"{BUTTON_THREE_URL}")
+                if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
+                    buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
+                if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
+                    buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
+            else:
+                file = self.copyFile(meta.get('id'), parent_id)
+                msg += f'<b>Filename : </b><code>{file.get("name")}</code>'
+                durl = self.__G_DRIVE_BASE_DOWNLOAD_URL.format(file.get("id"))
+                buttons = button_build.ButtonMaker()
+                if SHORTENER is not None and SHORTENER_API is not None:
+                    surl = requests.get('https://{}/api?api={}&url={}&format=text'.format(SHORTENER, SHORTENER_API, durl)).text
+                    buttons.buildbutton("☁️G-Drive Link☁️", surl)
+                else:
+                    buttons.buildbutton("☁️G-Drive Link☁️", durl)
+                try:
+                    msg += f'\n<b>Size : </b><code>{get_readable_file_size(int(meta.get("size")))}</code>'
+                except TypeError:
+                    pass
                 if INDEX_URL is not None:
                     url = requests.utils.requote_uri(f'{INDEX_URL}/{file.get("name")}')
-                    msg += f' | <a href="{url}">🔗 Index Link 🔗</a>'
+                    if SHORTENER is not None and SHORTENER_API is not None:
+                        siurl = requests.get('https://{}/api?api={}&url={}&format=text'.format(SHORTENER, SHORTENER_API, url)).text
+                        buttons.buildbutton("🔗G-Index Link🔗", siurl)
+                    else:
+                        buttons.buildbutton("🔗G-Index Link🔗", url)
+                if BUTTON_THREE_NAME is not None and BUTTON_THREE_URL is not None:
+                    buttons.buildbutton(f"{BUTTON_THREE_NAME}", f"{BUTTON_THREE_URL}")
+                if BUTTON_FOUR_NAME is not None and BUTTON_FOUR_URL is not None:
+                    buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
+                if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
+                    buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
             except TypeError:
                 pass
         return msg
