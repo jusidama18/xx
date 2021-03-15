@@ -354,7 +354,11 @@ class GoogleDriveHelper:
                 LOGGER.error(err)
                 return err
             status.set_status(True)
-                msg += f'''<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n<i>👾<b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'''
+                msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰'
+                msg += f'🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n'
+                msg += f'<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n'
+                msg += f'<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n'
+                msg += f'<i>👾 <b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
                 buttons = button_build.ButtonMaker()
                 if SHORTENER is not None and SHORTENER_API is not None:
