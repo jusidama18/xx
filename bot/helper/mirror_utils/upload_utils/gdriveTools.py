@@ -335,17 +335,6 @@ class GoogleDriveHelper:
             if meta.get("mimeType") == self.__G_DRIVE_DIR_MIME_TYPE:
                 dir_id = self.create_directory(meta.get('name'), parent_id)
                 result = self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
-            except Exception as e:
-            if isinstance(e, RetryError):
-                LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
-                err = e.last_attempt.exception()
-            else:
-                err = str(e).replace('>', '').replace('<', '')
-            LOGGER.error(err)
-            return err
-            status.set_status(True)
-            return msg, InlineKeyboardMarkup(buttons.build_menu(2))
-                
                 msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n<i>👾<b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
                 buttons = button_build.ButtonMaker()
@@ -394,7 +383,15 @@ class GoogleDriveHelper:
                     buttons.buildbutton(f"{BUTTON_FOUR_NAME}", f"{BUTTON_FOUR_URL}")
                 if BUTTON_FIVE_NAME is not None and BUTTON_FIVE_URL is not None:
                     buttons.buildbutton(f"{BUTTON_FIVE_NAME}", f"{BUTTON_FIVE_URL}")
-
+        except Exception as err:
+            if isinstance(err, RetryError):
+                LOGGER.info(f"Total Attempts: {err.last_attempt.attempt_number}")
+                err = err.last_attempt.exception()
+            err = str(err).replace('>', '').replace('<', '')
+            LOGGER.error(err)
+            return err, ""
+        return msg, InlineKeyboardMarkup(buttons.build_menu(2))
+                                                     
     def cloneFolder(self, name, local_path, folder_id, parent_id, status, ignoreList=[]):
         page_token = None
         q = f"'{folder_id}' in parents"
