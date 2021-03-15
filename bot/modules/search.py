@@ -11,6 +11,7 @@ from pyrogram import Client, filters
 from pyrogram.parser import html as pyrogram_html
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from bot.helper import custom_filters
+from bot.helper.telegram_helper.bot_commands import BotCommand
 from bot import app
 session = aiohttp.ClientSession()
 search_lock = asyncio.Lock()
