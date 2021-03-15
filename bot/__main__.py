@@ -124,7 +124,7 @@ def bot_help(update, context):
     sendMessage(help_string, context.bot, update)
 
 @run_async
-def helper(update, context):
+def chelps(update, context):
     sendMessage("Here are the available commands of the bot\n\n" \
         "*Usage:* `/clonebot1 <link> [DESTINATION_ID]`\n*Example:* \n1. `/clonebot1 https://drive.google.com/drive/u/1/folders/0AO-ISIXXXXXXXXXXXX`\n2. `/clonebot1 0AO-ISIXXXXXXXXXXXX`" \
             "\n*DESTIONATION_ID* is optional. It can be either link or ID to where you wish to store a particular clone." \
@@ -209,7 +209,7 @@ def main():
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter)
     clone_handler = CommandHandler(BotCommands.ClonCommand, cloneNode)
-    helps_handler = CommandHandler(BotCommands.HelpClonCommand, helper)
+    helps_handler = CommandHandler(BotCommands.HelpClonCommand, chelps)
     
     dispatcher.add_handler(clone_handler)
     dispatcher.add_handler(helps_handler)
