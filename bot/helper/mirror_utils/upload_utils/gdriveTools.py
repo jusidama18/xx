@@ -441,7 +441,7 @@ class GoogleDriveHelper:
                         err = e
                     LOGGER.error(err)
 
-    @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(5),
+    @retry(wait=wait_exponential(multiplier=2, min=3, max=6), stop=stop_after_attempt(15),
            retry=retry_if_exception_type(HttpError), before=before_log(LOGGER, logging.DEBUG))
     def create_directory(self, directory_name, parent_id):
         file_metadata = {
@@ -454,7 +454,7 @@ class GoogleDriveHelper:
         file_id = file.get("id")
         if not IS_TEAM_DRIVE:
             self.__set_permission(file_id)
-        LOGGER.info("✅ Created Google-Drive Folder:\nName: {}\nID: {} ".format(file.get("name"), file_id))
+        LOGGER.info("Created Google-Drive Folder:\nName: {}\nID: {} ".format(file.get("name"), file_id))
         return file_id
 
     def upload_dir(self, input_directory, parent_id):
@@ -540,18 +540,18 @@ class GoogleDriveHelper:
                     return file
 
 
-    def get_readable_file_size(size_in_bytes) -> str:
-        SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
-        if size_in_bytes is None:
-            return '0B'
-        index = 0
-        while size_in_bytes >= 1024:
-            size_in_bytes /= 1024
-            index += 1
-        try:
-            return f'{round(size_in_bytes, 2)}{SIZE_UNITS[index]}'
-        except IndexError:
-            return 'File too large'
+def get_readable_file_size(size_in_bytes) -> str:
+    SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
+    if size_in_bytes is None:
+        return '0B'
+    index = 0
+    while size_in_bytes >= 1024:
+        size_in_bytes /= 1024
+        index += 1
+    try:
+        return f'{round(size_in_bytes, 2)}{SIZE_UNITS[index]}'
+    except IndexError:
+        return 'File too large'
                                                      
     def edit_telegraph(self):
         nxt_page = 1 
