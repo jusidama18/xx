@@ -35,6 +35,7 @@ def cloneNode(update,context):
             # Usage: /clone <FolderToClone> <Destination> <IDtoIgnoreFromClone>,<IDtoIgnoreFromClone>
         
         msg = sendMessage(f"🔁 Cloning: <code>{link}</code>",context.bot,update)
+        status_class = CloneStatus()
         gd = GoogleDriveHelper(GFolder_ID=DESTINATION_ID)
         sendCloneStatus(update, context, status_class, msg, link)
         result, button = gd.clone(link, status_class, ignoreList=ignoreList)
