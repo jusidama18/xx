@@ -2,11 +2,13 @@ import os
 import pickle
 import urllib.parse as urlparse
 from urllib.parse import parse_qs
+from bot import LOGGER
 
-import re
 import json
-import requests
 import logging
+import re
+import requests
+import socket
 
 from google.auth.transport.requests import Request
 from google.oauth2 import service_account
@@ -24,12 +26,19 @@ from bot import parent_id, DOWNLOAD_DIR, IS_TEAM_DRIVE, INDEX_URL, \
     USE_SERVICE_ACCOUNTS, download_dict, telegraph_token, BUTTON_THREE_NAME, BUTTON_THREE_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, SHORTENER, SHORTENER_API
 from bot.helper.ext_utils.bot_utils import *
 from bot.helper.ext_utils.fs_utils import get_mime_type, get_path_size
+from bot.config import IS_TEAM_DRIVE, \
+            USE_SERVICE_ACCOUNTS, GDRIVE_FOLDER_ID, INDEX_URL
+
 
 LOGGER = logging.getLogger(__name__)
 logging.getLogger('googleapiclient.discovery').setLevel(logging.ERROR)
+socket.setdefaulttimeout(650) # https://github.com/googleapis/google-api-python-client/issues/632#issuecomment-541973021
 SERVICE_ACCOUNT_INDEX = 0
 TELEGRAPHLIMIT = 95
 
+def clean_name(name):
+    name = name.replace("'", "\\'")
+    return name
 
 class GoogleDriveHelper:
     def __init__(self, name=None, listener=None, GFolder_ID=GDRIVE_FOLDER_ID):
