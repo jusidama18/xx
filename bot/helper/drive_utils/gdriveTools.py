@@ -106,17 +106,6 @@ class GoogleDriveHelper:
     
     def drive_list(self, fileName):
         msg = ''
-        fileName = self.escapes(str(fileName))
-        # Create Search Query for API request.
-        query = f"'{parent_id}' in parents and (name contains '{fileName}')"
-        response = self.__service.files().list(supportsTeamDrives=True,
-                                               includeTeamDriveItems=True,
-                                               q=query,
-                                               spaces='drive',
-                                               pageSize=200,
-                                               fields='files(id, name, mimeType, size)',
-                                               orderBy='modifiedTime desc').execute()
-        
         INDEX = -1
         content_count = 0
         add_title_msg = True
