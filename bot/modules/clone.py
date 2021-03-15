@@ -1,7 +1,6 @@
-from telegram.ext import CommandHandler, run_async
+from telegram.ext import CommandHandler
 from bot.helper.mirror_utils.upload_utils.gdriveTools import GoogleDriveHelper
 from bot.fs_utils import get_readable_file_size
-from bot.decorators import is_authorised
 from telegram.error import TimedOut, BadRequest
 from bot.helper.telegram_helper.message_utils import *
 from bot.helper.telegram_helper.filters import CustomFilters
@@ -15,7 +14,6 @@ from bot import dispatcher, updater, bot
 import time
 
 @new_thread
-@is_authorised
 def cloneNode(update,context):
     args = update.message.text.split(" ")
     if len(args) > 1:
