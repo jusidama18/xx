@@ -8,7 +8,7 @@ from bot.config import BOT_TOKEN, OWNER_ID, GDRIVE_FOLDER_ID
 from bot import dispatcher
 
 
-@run_async
+@new_thread
 def cloneNode(update,context):
     args = update.message.text.split(" ")
     if len(args) > 1:
@@ -39,7 +39,7 @@ def cloneNode(update,context):
     else:
         sendMessage("⚙️ Provide G-Drive Shareable Link to Clone.",context.bot,update)
 
-@run_async
+@new_thread
 def sendCloneStatus(update, context, status, msg, link):
     old_text = ''
     while not status.done():
