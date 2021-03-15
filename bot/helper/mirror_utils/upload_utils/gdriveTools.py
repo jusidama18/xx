@@ -346,13 +346,14 @@ class GoogleDriveHelper:
             try:
                 self.cloneFolder(meta.get('name'), meta.get('name'), meta.get('id'), dir_id, status, ignoreList)
             except Exception as err:
-            if isinstance(err, RetryError):
-                LOGGER.info(f"Total Attempts: {err.last_attempt.attempt_number}")
-                err = err.last_attempt.exception()
-            err = str(err).replace('>', '').replace('<', '')
+            if isinstance(e, RetryError):
+                LOGGER.info(f"Total Attempts: {e.last_attempt.attempt_number}")
+                err = e.last_attempt.exception()
+            else:
+                err = str(e).replace('>', '').replace('<', '')
             LOGGER.error(err)
-            return err, ""
-        return msg, InlineKeyboardMarkup(buttons.build_menu(2))
+            return err
+            return msg, InlineKeyboardMarkup(buttons.build_menu(2))
                 
                 msg += f'<b>🔰 Name : </b><code>{meta.get("name")}</code>\n\n<b>🔰 Size : </b>{get_readable_file_size(self.transferred_size)}\n\n<i>👾 Join Our Team Drive To Access The G-Drive Link.</i>\n<i>👾 Do Not Share The Index Link In Public Groups/Channel/Forums Etc Without Permission.</i>\n<i>👾<b>Permanent Banned</b> if you break The Rules.</i>\n\n #Uploads @Jusidama'
                 durl = self.__G_DRIVE_DIR_BASE_DOWNLOAD_URL.format(dir_id)
