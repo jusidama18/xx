@@ -21,6 +21,8 @@ from .plugins.new_join_fn import help_message_f, new_join_f
 
 from bot import AUTHORIZED_CHATS
 
+AUTHORIZED_CHATS = AUTH_CHANNEL
+
 @run_async
 def stats(update, context):
     currentTime = get_readable_time((time.time() - botStartTime))
@@ -137,11 +139,13 @@ def main():
     
     new_join_handler = MessageHandler(
         new_join_f,
-        filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
+        filters=~filters.chat(chats=AUTH_CHANNEL)
+    )
     
     group_new_join_handler = MessageHandler(
         help_message_f,
-        filters=CustomFilters.authorized_chat | CustomFilters.authorized_user & filters.new_chat_members)
+        filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members
+    )
     
     dispatcher.add_handler(new_join_handler)
     dispatcher.add_handler(group_new_join_handler)
