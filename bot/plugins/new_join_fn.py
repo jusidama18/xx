@@ -6,7 +6,7 @@ import logging
 
 import pyrogram
 # the logging things
-from bot.config import AUTH_CHANNEL
+AUTH_CHANNEL = [-1001221644423]
 
 logging.basicConfig(
     level=logging.DEBUG,
