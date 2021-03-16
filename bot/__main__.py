@@ -19,8 +19,6 @@ from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
 from .plugins.new_join_fn import help_message_f, new_join_f
 
-AUTH_CHANNEL == [-1001221644423]
-
 app = Client()
 
 @run_async
@@ -136,6 +134,8 @@ def main():
     stats_handler = CommandHandler(BotCommands.StatsCommand,
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter)
+    
+    AUTH_CHANNEL == [-1001221644423]
     
     new_join_handler = MessageHandler(
         new_join_f,
