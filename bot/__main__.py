@@ -6,6 +6,9 @@ from os import execl, path, remove
 from sys import executable
 import time
 
+from pyrogram import filters
+from pyrogram.handlers import CallbackQueryHandler, MessageHandler
+
 from telegram.ext import CommandHandler, run_async
 from bot import dispatcher, updater, botStartTime
 from bot.helper.ext_utils import fs_utils
@@ -129,6 +132,24 @@ def main():
     stats_handler = CommandHandler(BotCommands.StatsCommand,
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter)
+    
+    new_join_handler = MessageHandler(
+        new_join_f,
+        filters=~filters.chat(chats=AUTHORIZED_CHATS)
+    )
+    dispatcher.add_handler(new_join_handler)
+    #
+    group_new_join_handler = MessageHandler(
+        help_message_f,
+        filters=filters.chat(chats=AUTHORIZED_CHATS) & filters.new_chat_members
+    )
+    dispatcher.add_handler(group_new_join_handler)
+    #
+    call_back_button_handler = CallbackQueryHandler(
+        button
+    )
+    dispatcher.add_handler(call_back_button_handler)
+    
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(restart_handler)
