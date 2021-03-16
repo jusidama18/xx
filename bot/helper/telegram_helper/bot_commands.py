@@ -22,6 +22,6 @@ class _BotCommands:
         self.DeleteCommand = 'del'
         self.TorrentCommand = 'tshelp'
         self.UsageCommand = 'usage'
-        self.AuthorizedUsersCommand = 'users
+        self.AuthorizedUsersCommand = 'users'
         
 BotCommands = _BotCommands()
