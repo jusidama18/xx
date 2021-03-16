@@ -33,7 +33,6 @@ RUN  apt-get update \
 RUN wget https://repo.juicedama.workers.dev/MirrorX/accounts.zip
 RUN unzip accounts.zip
 RUN wget https://repo.juicedama.workers.dev/MirrorX/X/config.env
-RUN wget https://raw.githubusercontent.com/jusidama18/magneto-python-aria/master/drive_folder
 RUN rm -rf accounts.zip
 
 CMD ["bash","start.sh"]
