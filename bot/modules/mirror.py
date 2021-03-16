@@ -209,6 +209,12 @@ def _mirror(bot, update, isTar=False, extract=False):
     name_args = update.message.text.split('|')
     try:
         link = message_args[1]
+    except IndexError:
+        link = ''
+    try:
+        name = name_args[1]
+    except IndexError:
+        name = ''
         if link.startswith("|") or link.startswith("pswd: "):
             link = ''
     except IndexError:
@@ -264,10 +270,10 @@ def _mirror(bot, update, isTar=False, extract=False):
             sendMessage("Mega Links Are Blocked ✋", bot, update)
         else:
             mega_dl = MegaDownloadHelper()
-            mega_dl.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/', listener)
+            mega_dl.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/', listener, name)
             sendStatusMessage(update, bot)
     else:
-        ariaDlManager.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/', listener)
+        ariaDlManager.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/', listener, name)
         sendStatusMessage(update, bot)
     if len(Interval) == 0:
         Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
