@@ -19,7 +19,7 @@ from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
 from .plugins.new_join_fn import help_message_f, new_join_f
 
-AUTH_CHANNEL = [-1001221644423]
+AUTH_CHANNEL == [-1001221644423]
 
 app = Client()
 
@@ -139,12 +139,12 @@ def main():
     
     new_join_handler = MessageHandler(
         new_join_f,
-        filters=~filters.chat(chats="-1001221644423")
+        filters=~filters.chat(chats=AUTH_CHANNEL)
     )
     
     group_new_join_handler = MessageHandler(
         help_message_f,
-        filters=filters.chat(chats="-1001221644423") & filters.new_chat_members
+        filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members
     )
     
     app.add_handler(new_join_handler)
