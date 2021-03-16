@@ -16,9 +16,9 @@ import faulthandler
 faulthandler.enable()
 
 if bool(os.environ.get("ENV", False)):
-    from tobrot.sample_config import Config
+    from bot.sample_config import Config
 else:
-    from tobrot.config import Config
+    from bot.config import Config
 
 socket.setdefaulttimeout(600)
 
