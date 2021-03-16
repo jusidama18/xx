@@ -2,4 +2,4 @@ import os
 
 class Config(object):
     AUTH_CHANNEL = set(int(x)
-                       for x in os.environ.get("AUTH_CHANNEL", "-1001221644423").split())
+                       for x in os.environ.get("AUTH_CHANNEL", "").split())
