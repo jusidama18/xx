@@ -15,18 +15,18 @@ import socket
 import faulthandler
 faulthandler.enable()
 
-if bool(os.environ.get("ENV", False)):
-    from bot.sample_config import Config
-else:
-    from bot.config import Config
+#if bool(os.environ.get("ENV", False)):
+#    from bot.sample_config import Config
+#else:
+#   from bot.config import Config
 
-BOT_TOKEN = Config.BOT_TOKEN
-TELEGRAM_ID = Config.TELEGRAM_ID
-TELEGRAM_HASH = Config.TELEGRAM_HASH
-OWNER_ID = Config.OWNER_ID    
-AUTH_CHANNEL = list(Config.AUTH_CHANNEL)
-AUTH_CHANNEL.append(OWNER_ID)
-AUTH_CHANNEL = list(set(AUTH_CHANNEL))
+#BOT_TOKEN = Config.BOT_TOKEN
+#TELEGRAM_ID = Config.TELEGRAM_ID
+#TELEGRAM_HASH = Config.TELEGRAM_HASH
+#OWNER_ID = Config.OWNER_ID    
+#AUTH_CHANNEL = list(Config.AUTH_CHANNEL)
+#AUTH_CHANNEL.append(OWNER_ID)
+#AUTH_CHANNEL = list(set(AUTH_CHANNEL))
 
 socket.setdefaulttimeout(600)
 
