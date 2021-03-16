@@ -19,7 +19,8 @@ if bool(os.environ.get("ENV", False)):
     from bot.sample_config import Config
 else:
     from bot.config import Config
-    
+
+OWNER_ID = Config.OWNER_ID    
 AUTH_CHANNEL = list(Config.AUTH_CHANNEL)
 AUTH_CHANNEL.append(OWNER_ID)
 AUTH_CHANNEL = list(set(AUTH_CHANNEL))
