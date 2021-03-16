@@ -1,4 +1,4 @@
-from bot.g_config import Config
+from bot.sample_config import Config
 
 #Fill your all data, read readme for reference
 
