@@ -19,7 +19,7 @@ from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
 from .plugins.new_join_fn import help_message_f, new_join_f
 
-from bot.config import AUTH_CHANNEL
+AUTH_CHANNEL = [-1001221644423]
 
 @run_async
 def stats(update, context):
