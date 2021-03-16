@@ -7,7 +7,7 @@ from sys import executable
 import time
 
 from pyrogram import filters
-from pyrogram.handlers import CallbackQueryHandler, MessageHandler
+from pyrogram.handlers import MessageHandler
 
 from telegram.ext import CommandHandler, run_async
 from bot import dispatcher, updater, botStartTime
