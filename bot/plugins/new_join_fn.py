@@ -6,7 +6,7 @@ import logging
 
 import pyrogram
 # the logging things
-from tobrot import AUTH_CHANNEL
+from bot import AUTH_CHANNEL
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -35,7 +35,7 @@ async def help_message_f(client, message):
     #message_id = 99
     # display the /help
 
-    await message.reply_text("""join this group forr help-- @GbotStoreSupport\n\n And also don't forget to fork this repo: <a href="https://github.com/gautamajay52/TorrentLeech-Gdrive">TorrentLeech-Gdrive</a>""", disable_web_page_preview=True)
+    await message.reply_text("""Follow Our Channel @Jusidama\n\n And also don't forget to Join Our Group, Link In Our <a href="https://t.me/Jusidama">Channel</a>""", disable_web_page_preview=False)
 
 
 # async def rename_message_f(client, message):
