@@ -20,10 +20,7 @@ class _BotCommands:
         self.WatchCommand = 'ytdl'
         self.TarWatchCommand = 'tarytdl2'
         self.DeleteCommand = 'del'
-        self.ClonCommand = 'cln'
-        self.HelpClonCommand = 'hcln'
         self.TorrentCommand = 'tshelp'
         self.UsageCommand = 'usage'
-        self.AuthorizedUsersCommand = 'users'
         
 BotCommands = _BotCommands()
