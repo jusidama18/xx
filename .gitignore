@@ -12,5 +12,3 @@ authorized_chats.txt
 log.txt
 accounts/*
 .heroku/
-drive_folder
-drive_folder.txt
