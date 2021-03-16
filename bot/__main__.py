@@ -6,7 +6,7 @@ from os import execl, path, remove
 from sys import executable
 import time
 
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.handlers import MessageHandler
 
 from telegram.ext import CommandHandler, run_async
@@ -19,7 +19,7 @@ from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
 from .plugins.new_join_fn import help_message_f, new_join_f
 
-app = Client()
+app = Client("MirrorBot")
 
 @run_async
 def stats(update, context):
