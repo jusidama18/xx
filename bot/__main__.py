@@ -137,16 +137,14 @@ def main():
     
     new_join_handler = MessageHandler(
         new_join_f,
-        filters=~filters.chat(chats=AUTHORIZED_CHATS)
-    )
-    dispatcher.add_handler(new_join_handler)
-    #
+        filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
+    
     group_new_join_handler = MessageHandler(
         help_message_f,
-        filters=filters.chat(chats=AUTHORIZED_CHATS) & filters.new_chat_members
-    )
-    dispatcher.add_handler(group_new_join_handler)
+        filters=CustomFilters.authorized_chat | CustomFilters.authorized_user & filters.new_chat_members)
     
+    dispatcher.add_handler(new_join_handler)
+    dispatcher.add_handler(group_new_join_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(restart_handler)
