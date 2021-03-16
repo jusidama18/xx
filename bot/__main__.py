@@ -17,7 +17,7 @@ from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
-from bot import TELEGRAM_HASH, TELEGRAM_ID, AUTH_CHANNEL, BOT_TOKEN
+from bot.config import TELEGRAM_HASH, TELEGRAM_ID, AUTH_CHANNEL, BOT_TOKEN
 from .plugins.new_join_fn import help_message_f, new_join_f
 
 AUTH_CHANNEL = [-1001221644423]
