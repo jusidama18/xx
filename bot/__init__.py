@@ -15,6 +15,11 @@ import socket
 import faulthandler
 faulthandler.enable()
 
+if bool(os.environ.get("ENV", False)):
+    from tobrot.sample_config import Config
+else:
+    from tobrot.config import Config
+
 socket.setdefaulttimeout(600)
 
 botStartTime = time.time()
