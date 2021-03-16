@@ -6,8 +6,6 @@ from os import execl, path, remove
 from sys import executable
 import time
 
-from pyrogram import Client, filters
-from pyrogram.handlers import MessageHandler
 
 from telegram.ext import CommandHandler, run_async
 from bot import dispatcher, updater, botStartTime
@@ -17,9 +15,7 @@ from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
-from .plugins.new_join_fn import help_message_f, new_join_f
-
-app = Client("MirrorBot")
+from .plugins import new_join_fn
 
 @run_async
 def stats(update, context):
@@ -135,20 +131,6 @@ def main():
                                    stats, filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
     log_handler = CommandHandler(BotCommands.LogCommand, log, filters=CustomFilters.owner_filter)
     
-    AUTH_CHANNEL == [-1001221644423]
-    
-    new_join_handler = MessageHandler(
-        new_join_f,
-        filters=~filters.chat(chats=AUTH_CHANNEL)
-    )
-    
-    group_new_join_handler = MessageHandler(
-        help_message_f,
-        filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members
-    )
-    
-    app.add_handler(new_join_handler)
-    app.add_handler(group_new_join_handler)
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(ping_handler)
     dispatcher.add_handler(restart_handler)
