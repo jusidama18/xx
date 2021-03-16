@@ -144,11 +144,6 @@ def main():
         filters=filters.chat(chats=AUTHORIZED_CHATS) & filters.new_chat_members
     )
     dispatcher.add_handler(group_new_join_handler)
-    #
-    call_back_button_handler = CallbackQueryHandler(
-        button
-    )
-    dispatcher.add_handler(call_back_button_handler)
     
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(ping_handler)
