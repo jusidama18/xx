@@ -17,18 +17,11 @@ from bot.helper.telegram_helper.message_utils import *
 from .helper.ext_utils.bot_utils import get_readable_file_size, get_readable_time
 from .helper.telegram_helper.filters import CustomFilters
 from .modules import authorize, list, cancel_mirror, mirror_status, mirror, clone, watch, delete, speedtest
-from bot.config import TELEGRAM_HASH, TELEGRAM_ID, AUTH_CHANNEL, BOT_TOKEN
 from .plugins.new_join_fn import help_message_f, new_join_f
 
 AUTH_CHANNEL = [-1001221644423]
 
-app = Client(
-        "MirrorBot",
-        bot_token=BOT_TOKEN,
-        api_id=TELEGRAM_ID,
-        api_hash=TELEGRAM_HASH,
-        workers=343
-    )
+app = Client()
 
 @run_async
 def stats(update, context):
@@ -146,12 +139,12 @@ def main():
     
     new_join_handler = MessageHandler(
         new_join_f,
-        filters=~filters.chat(chats=AUTH_CHANNEL)
+        filters=~filters.chat(chats="-1001221644423")
     )
     
     group_new_join_handler = MessageHandler(
         help_message_f,
-        filters=filters.chat(chats=AUTH_CHANNEL) & filters.new_chat_members
+        filters=filters.chat(chats="-1001221644423") & filters.new_chat_members
     )
     
     app.add_handler(new_join_handler)
