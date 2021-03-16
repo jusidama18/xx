@@ -6,9 +6,7 @@ import logging
 
 import pyrogram
 # the logging things
-from bot import AUTHORIZED_CHATS
-
-AUTHORIZED_CHATS = AUTH_CHANNEL
+from bot import AUTH_CHANNEL
 
 logging.basicConfig(
     level=logging.DEBUG,
