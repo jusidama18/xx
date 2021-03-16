@@ -10,7 +10,6 @@ import telegram.ext as tg
 from dotenv import load_dotenv
 from pyrogram import Client
 from telegraph import Telegraph
-from bot.config import BOT_TOKEN
 
 import socket
 import faulthandler
@@ -66,8 +65,6 @@ status_reply_dict = {}
 download_dict = {}
 # Stores list of users and chats the bot is authorized to use in
 AUTHORIZED_CHATS = set()
-
-AUTHORIZED_CHATS = set()
 if os.path.exists('authorized_chats.txt'):
     with open('authorized_chats.txt', 'r+') as f:
         lines = f.readlines()
@@ -81,44 +78,6 @@ try:
         AUTHORIZED_CHATS.add(int(chats))
 except:
     pass
-try:
-    BOT_TOKEN = getConfig('BOT_TOKEN')
-    OWNER_ID = int(getConfig('OWNER_ID'))
-except KeyError as e:
-    LOGGER.error("One or more env variables missing! Exiting now")
-    exit(1)
-
-DRIVE_NAME = []
-DRIVE_ID = []
-INDEX_URL = []
-
-if os.path.exists('drive_folder'):
-    with open('drive_folder', 'r+') as f:
-        lines = f.readlines()
-        for line in lines:
-            temp = line.strip().split()
-            DRIVE_NAME.append(temp[0].replace("_", " "))
-            DRIVE_ID.append(temp[1])
-            try:
-                INDEX_URL.append(temp[2])
-            except IndexError as e:
-                INDEX_URL.append(None)
-
-if DRIVE_ID :
-    pass
-else :
-    LOGGER.error("The README.md file there to be read! Exiting now!")
-    exit(1)
-
-#Generate Telegraph Token
-sname = ''.join(random.SystemRandom().choices(string.ascii_letters, k=8))
-LOGGER.info("Generating Telegraph Token using '" + sname + "' name")
-telegraph = Telegraph()
-telegraph.create_account(short_name=sname)
-telegraph_token = telegraph.get_access_token()
-LOGGER.info("Telegraph Token Generated: '" + telegraph_token + "'")
-        
-
 
 try:
     BOT_TOKEN = getConfig('BOT_TOKEN')
@@ -131,8 +90,6 @@ try:
     AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
     TELEGRAM_API = getConfig('TELEGRAM_API')
     TELEGRAM_HASH = getConfig('TELEGRAM_HASH')
-    HEROKU_API_KEY = getConfig('HEROKU_API_KEY')
-    HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
 except KeyError as e:
     LOGGER.error("One or more env variables missing! Exiting now")
     exit(1)
@@ -141,7 +98,13 @@ LOGGER.info("Generating USER_SESSION_STRING")
 with Client(':memory:', api_id=int(TELEGRAM_API), api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN) as app:
     USER_SESSION_STRING = app.export_session_string()
 
-
+#Generate Telegraph Token
+sname = ''.join(random.SystemRandom().choices(string.ascii_letters, k=8))
+LOGGER.info("Generating Telegraph Token using '" + sname + "' name")
+telegraph = Telegraph()
+telegraph.create_account(short_name=sname)
+telegraph_token = telegraph.get_access_token()
+LOGGER.info("Telegraph Token Generated: '" + telegraph_token + "'")
 
 try:
     UPTOBOX_TOKEN = getConfig('UPTOBOX_TOKEN')
@@ -236,7 +199,6 @@ except KeyError:
     SHORTENER = None
     SHORTENER_API = None
 
-app = Client('slam', api_id=TELEGRAM_API, api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN)
 updater = tg.Updater(token=BOT_TOKEN,use_context=True)
 bot = updater.bot
 dispatcher = updater.dispatcher
