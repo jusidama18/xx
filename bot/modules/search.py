@@ -6,7 +6,6 @@ import feedparser
 from telegram.ext import run_async, CommandHandler
 from telegram import ParseMode
 from bot import dispatcher
-from bot.helper.telegram_helper.bot_commands import BotCommands
 from urllib.parse import quote as urlencode, urlsplit
 from pyrogram import Client, filters
 from pyrogram.parser import html as pyrogram_html
@@ -149,5 +148,5 @@ def searchhelp(update, context):
     update.effective_message.reply_photo("https://f.cyberdrop.cc/prrgsr-4KHsJD3j.png", help_string, parse_mode=ParseMode.HTML)
     
     
-SEARCHHELP_HANDLER = CommandHandler(BotCommands.TorrentCommand, searchhelp)
+SEARCHHELP_HANDLER = CommandHandler("tshelp", searchhelp)
 dispatcher.add_handler(SEARCHHELP_HANDLER)
