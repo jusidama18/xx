@@ -69,7 +69,7 @@
       },
       "USE_SERVICE_ACCOUNTS": {
         "description": "Whether to use service accounts or not. For this to work see 'Using service accounts' section below.",
-        "value": "",
+        "value": "True",
         "required": false
       },  
       "INDEX_URL": {
@@ -94,12 +94,12 @@
       }, 
       "STOP_DUPLICATE_MIRROR": {
         "description": "(Optional field) (Leave empty if unsure) if this field is set to True, bot will check file in drive, if it is present in drive, downloading will be stopped. (Note - File will be checked using filename, not using filehash, so this feature is not perfect yet) Note: You can limit maximum concurrent downloads by changing the value of MAX_CONCURRENT_DOWNLOADS in aria.sh. By default, it's set to 2.",
-        "value": "",
+        "value": "True",
         "required": false
       }, 
       "BLOCK_MEGA_LINKS": {
         "description": "(Optional field) If you want to remove mega.nz mirror support (bcoz it's too much buggy and unstable), set it to True.",
-        "value": "",
+        "value": "False",
         "required": false
       }, 
       "USER_SESSION_STRING": {
