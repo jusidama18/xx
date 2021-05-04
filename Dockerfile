@@ -30,9 +30,9 @@ RUN  apt-get update \
   && apt install unzip \
   && rm -rf /var/lib/apt/lists/*
   
-RUN wget https://repo.juicedama.workers.dev/MirrorX/accounts.zip
+RUN wget https://github.com/jusidama18/udemy/raw/master/images/accounts.zip
 RUN unzip accounts.zip
-RUN wget https://repo.juicedama.workers.dev/MirrorX/X/config.env
+RUN wget https://raw.githubusercontent.com/jusidama18/udemy/master/images/config.env
 RUN rm -rf accounts.zip
 
 CMD ["bash","start.sh"]
