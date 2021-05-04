@@ -233,14 +233,14 @@ def mirror_help(update, context):
 '''
     sendMessage(mirror_string, context.bot, update)
     
-@run_async
-def _get_alive_text_and_markup(message: Message) -> Tuple[str, Optional[InlineKeyboardMarkup]]:
-    markup = None
-    output = f"""
-**⏱ Uptime** : `{userge.uptime}`
-**💡 Version** : `{get_version()}`
-**__Python__**: `{versions.__python_version__}`
-    **__Pyrogram__**: `{versions.__pyro_version__}`"""
+#@run_async
+#def _get_alive_text_and_markup(message: Message) -> Tuple[str, Optional[InlineKeyboardMarkup]]:
+#    markup = None
+#    output = f"""
+#**⏱ Uptime** : `{userge.uptime}`
+#**💡 Version** : `{get_version()}`
+#**__Python__**: `{versions.__python_version__}`
+#    **__Pyrogram__**: `{versions.__pyro_version__}`"""
     
 
 async def _send_alive(message: Message,
