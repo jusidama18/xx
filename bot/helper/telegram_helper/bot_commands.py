@@ -22,10 +22,10 @@ class _BotCommands:
         self.DeleteCommand = 'del'
         self.UsageCommand = 'usage'
         self.AuthorizedUsersCommand = 'users'
-	    self.SystemstatsCommand= 'system'
+	self.SystemstatsCommand= 'System'
         self.WikiCommand= 'wiki'
         self.TotranslateCommand = 'tr'
-        self.PasteCommand = 'paste'
+        self.PasteCommand = 'Paste'
         self.systemkutestCommand = 'neofetch'
         
 BotCommands = _BotCommands()
