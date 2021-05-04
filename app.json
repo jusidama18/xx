@@ -24,12 +24,12 @@
       },
       "GDRIVE_FOLDER_ID": {
         "description": "This is the folder ID of the Google Drive Folder to which you want to upload all the mirrors.",
-        "value": "1vmENDXZ03wDx4zUsPDtmTvl0T5jD93R3",
+        "value": "QsUBnQCY",
         "required": true
       },
       "OWNER_ID": {
         "description": "The Telegram user ID (not username) of the owner of the bot.",
-        "value": "",
+        "value": "1303747114",
         "required": true
       },  
       "DOWNLOAD_DIR": {
@@ -74,11 +74,11 @@
       },  
       "INDEX_URL": {
         "description": "Refer to https://github.com/maple3142/GDIndex/ The URL should not have any trailing '/'.",
-        "value": "",
+        "value": "https://database.juicedama.workers.dev/8:",
         "required": false
       },  
       "MEGA_API_KEY": {
-        "description": "",
+        "description": "QsUBnQCY",
         "value": "",
         "required": false
       },
