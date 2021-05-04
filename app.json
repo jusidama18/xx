@@ -78,8 +78,8 @@
         "required": false
       },  
       "MEGA_API_KEY": {
-        "description": "QsUBnQCY",
-        "value": "",
+        "description": "",
+        "value": "QsUBnQCY",
         "required": false
       },
       "MEGA_EMAIL_ID": {
