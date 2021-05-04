@@ -15,19 +15,6 @@ import socket
 import faulthandler
 faulthandler.enable()
 
-#if bool(os.environ.get("ENV", False)):
-#    from bot.sample_config import Config
-#else:
-#   from bot.config import Config
-
-#BOT_TOKEN = Config.BOT_TOKEN
-#TELEGRAM_ID = Config.TELEGRAM_ID
-#TELEGRAM_HASH = Config.TELEGRAM_HASH
-#OWNER_ID = Config.OWNER_ID    
-#AUTH_CHANNEL = list(Config.AUTH_CHANNEL)
-#AUTH_CHANNEL.append(OWNER_ID)
-#AUTH_CHANNEL = list(set(AUTH_CHANNEL))
-
 socket.setdefaulttimeout(600)
 
 botStartTime = time.time()
@@ -103,6 +90,13 @@ try:
     AUTO_DELETE_MESSAGE_DURATION = int(getConfig('AUTO_DELETE_MESSAGE_DURATION'))
     TELEGRAM_API = getConfig('TELEGRAM_API')
     TELEGRAM_HASH = getConfig('TELEGRAM_HASH')
+    HEROKU_API_KEY = getConfig('HEROKU_API_KEY')
+    HEROKU_APP_NAME = getConfig('HEROKU_APP_NAME')
+    CASH_API_KEY = os.environ.get('CASH_API_KEY', None)
+    TIME_API_KEY = os.environ.get('TIME_API_KEY', None)
+    WALL_API = os.environ.get('WALL_API', None)
+    LASTFM_API_KEY = os.environ.get('LASTFM_API_KEY', None)
+    DB_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
 except KeyError as e:
     LOGGER.error("One or more env variables missing! Exiting now")
     exit(1)
@@ -193,7 +187,6 @@ try:
         USE_SERVICE_ACCOUNTS = False
 except KeyError:
     USE_SERVICE_ACCOUNTS = False
-    
 try:
     BLOCK_MEGA_FOLDER = getConfig('BLOCK_MEGA_FOLDER')
     if BLOCK_MEGA_FOLDER.lower() == 'true':
@@ -220,6 +213,7 @@ except KeyError:
     SHORTENER = None
     SHORTENER_API = None
 
+app = Client('slam', api_id=TELEGRAM_API, api_hash=TELEGRAM_HASH, bot_token=BOT_TOKEN)
 updater = tg.Updater(token=BOT_TOKEN,use_context=True)
 bot = updater.bot
 dispatcher = updater.dispatcher
