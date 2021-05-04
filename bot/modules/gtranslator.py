@@ -1,5 +1,5 @@
-from emoji import UNICODE_EMOJI      
-from google.cloud import translator, LANGUAGE
+from emoji import UNICODE_EMOJI
+from googletrans import Translator, LANGUAGES
 from telegram import Update, ParseMode
 from telegram.ext import run_async, CallbackContext
 
@@ -11,7 +11,7 @@ from bot.helper.telegram_helper.filters import CustomFilters
 @run_async
 def totranslate(update: Update, _):
     msg = update.effective_message
-    problem_lang_code = [key for key in languages if "-" in key]
+    problem_lang_code = [key for key in LANGUAGES if "-" in key]
     try:
         if msg.reply_to_message and msg.reply_to_message.text:
 
@@ -52,7 +52,7 @@ def totranslate(update: Update, _):
                 if emoji in text:
                     text = text.replace(emoji, '')
 
-            trl = translator()
+            trl = Translator()
             if source_lang is None:
                 detection = trl.detect(text)
                 tekstr = trl.translate(text, dest=dest_lang)
