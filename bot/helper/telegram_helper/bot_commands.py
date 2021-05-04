@@ -19,7 +19,7 @@ class _BotCommands:
         self.CloneCommand = "clone"
         self.WatchCommand = 'ytdl'
         self.TarWatchCommand = 'tarytdl'
-        self.deleteCommand = 'del'
+        self.DeleteCommand = 'del'
         self.clnCommand = 'cln'
         self.UsageCommand = 'usage'
         self.SystemstatsCommand= 'system'
