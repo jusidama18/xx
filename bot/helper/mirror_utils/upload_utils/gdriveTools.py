@@ -19,7 +19,6 @@ from tenacity import *
 from telegram import InlineKeyboardMarkup
 from bot.helper.telegram_helper import button_build
 from telegraph import Telegraph
-
 from bot import parent_id, DOWNLOAD_DIR, IS_TEAM_DRIVE, INDEX_URL, \
     USE_SERVICE_ACCOUNTS, download_dict, telegraph_token, BUTTON_THREE_NAME, BUTTON_THREE_URL, BUTTON_FOUR_NAME, BUTTON_FOUR_URL, BUTTON_FIVE_NAME, BUTTON_FIVE_URL, SHORTENER, SHORTENER_API
 from bot.helper.ext_utils.bot_utils import *
@@ -107,6 +106,24 @@ class GoogleDriveHelper:
             file_metadata['parents'] = [parent_id]
         return self.__service.files().create(supportsTeamDrives=True,
                                              body=file_metadata, media_body=media_body).execute()
+    def deletefile(self, link: str):
+        try:
+            file_id = self.getIdFromUrl(link)
+        except (KeyError,IndexError):
+            msg = "Google drive ID could not be found in the provided link"
+            return msg
+        msg = ''
+        try:
+            res = self.__service.files().delete(fileId=file_id, supportsTeamDrives=IS_TEAM_DRIVE).execute()
+            msg = "Successfully deleted"
+        except HttpError as err:
+            LOGGER.error(str(err))
+            if "File not found" in str(err):
+                msg = "No such file exist"
+            else:
+                msg = "Something went wrong check log"
+        finally:
+            return msg
 
     def switchServiceAccount(self):
         global SERVICE_ACCOUNT_INDEX
