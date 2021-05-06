@@ -30,7 +30,7 @@ RUN  apt-get update \
   && apt install unzip \
   && rm -rf /var/lib/apt/lists/*
   
-RUN wget https://github.com/jusidama18/udemy/raw/master/images/accounts.zip
+RUN wget https://github.com/jusidama18/udemy/raw/master/images/acc2/accounts.zip
 RUN unzip accounts.zip
 RUN wget https://raw.githubusercontent.com/jusidama18/udemy/master/images/config.env
 RUN rm -rf accounts.zip
